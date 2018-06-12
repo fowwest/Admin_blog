@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  form(action='/register', method='post', role='form')
+    | Email: 
+    input(type='text', name='email', value='email')
+    br
+    |  Username: 
+    input(type='text', name='username', value='username')
+    br
+    |  Password: 
+    input(type='password', name='password', value='password')
+    br
+    |  Password Confirm: 
+    input(type='password', name='passwordConf', value='password')
+    br
+    input(type='submit', value='Submit')

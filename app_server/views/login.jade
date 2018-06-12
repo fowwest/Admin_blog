@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  form(action='/login', method='post', role='form')
+    | Email: 
+    input(type='text', name='logemail', value='email')
+    br
+    |  Password: 
+    input(type='password', name='logpassword', value='password')
+    br
+    input(type='submit', value='Submit')
