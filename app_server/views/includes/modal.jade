@@ -1,0 +1,20 @@
+// The Modal
+#myModal.modal
+  // Modal content
+  .modal-content
+    .modal-header
+      span.close ×
+      h2 Modal Header
+    .modal-body
+      form(action='/add_post', method='post', role='form')
+        | Title: 
+        input(type='text', name='post_title', value='title here')
+        br
+        br
+        | Content: 
+        input(type='text', name='post_content', value='content here')
+        br
+        br
+        input(type='submit', value='Add Post')
+    .modal-footer
+      h3 Modal Footer

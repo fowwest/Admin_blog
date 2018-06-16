@@ -11,7 +11,8 @@ require('./app_api/models/db');
 
 // Routes
 var index = require('./app_server/routes/index');
-var users = require('./app_server/routes/users');
+var admin = require('./app_server/routes/admin');
+var routesApi = require('./app_api/routes/index');
 
 var app = express();
 
@@ -35,7 +36,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/', users);
+app.use('/', admin);
+app.use('/api', routesApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

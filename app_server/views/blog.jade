@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= name
+
+  section#interests.resume-section.p-3.p-lg-5.d-flex.flex-column
+        .my-auto
+          h2.mb-5 Blog
+          each post in posts
+            p
+              | #{post.title}
+            p.mb-0
+              | #{post.content}
+
+  if isAdmin
+    // Trigger/Open The Modal
+    button#myBtn Add Post
+    include ./includes/modal.jade
+
+
+

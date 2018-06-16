@@ -1,59 +1,52 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var User = mongoose.model('User');
 
-function requiresLogin(req, res, next) {
-  if (req.session && req.session.userId) {
-    return next();
-  } else {
-    var err = new Error('You must be logged in to view this page.');
-    err.status = 401;
-    return next(err);
-  }
-}
+var ctrlAdmin = require('../controllers/admin');
+var ctrlBlog = require('../controllers/blog');
+
+var Admin = mongoose.model('Admin');
+var Blog = mongoose.model('Blog');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+
+  if (req.session.userId) {
+
+    console.log(req.session.userId)
+
+  } else {
+
+    console.log('session was destroyed')
+
+  }
+
   res.render('index', { title: 'Express' });
 }); 
 
-/* GET home page. */
+/* Admin routes */
+
 router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Express' });
+
+  res.render('register', { title: 'Express' });  
+
 }); 
 
-/* GET home page. */
 router.get('/login', function(req, res, next) {
+
   res.render('login', { title: 'Express' });
+
 });
 
-// GET route after registering
-router.get('/profile', requiresLogin , function (req, res, next) {
-  User.findById(req.session.userId)
-    .exec(function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-      	res.render('profile', { name: user.username, isUser: true});
-        // return res.json({ name: user.username, email: user.email });
-      }
-    });
-});
+router.get('/profile', ctrlAdmin.requiresLogin , ctrlAdmin.getProfile);
 
-// GET /logout
-router.get('/logout', function(req, res, next) {
-  if (req.session) {
-    // delete session object
-    req.session.destroy(function(err) {
-      if(err) {
-        return next(err);
-      } else {
-        return res.redirect('/');
-      }
-    });
-  }
-});
+router.get('/logout', ctrlAdmin.logout);
+
+
+/* Blog routes */
+
+router.get('/blog' , ctrlBlog.blog);
 
 module.exports = router;
 

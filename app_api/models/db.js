@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var dbURI = 'mongodb://localhost:27017/user_auth';
+var dbURI = 'mongodb://localhost:27017/admin-blog';
 
 // If in production mode, use production database. Use MONGODB_URI instead of
 // dbURI string to hide database credentials
@@ -48,7 +48,7 @@ process.on('SIGTERM', function(){
 });
 
 // Require schema
-require('./User');
+require('./admin');
 
 // If using in another application; "npm remove mongoose" 
 // then "npm install mongoose@4.10.8 --save". Upgrading is not always the best option.
