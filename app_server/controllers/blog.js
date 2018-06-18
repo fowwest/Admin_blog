@@ -67,6 +67,34 @@ module.exports.blog = function(req, res){
   });
 };
 
+/* GET blog page */
+module.exports.blog = function(req, res){
+
+  // GET blog posts through api
+  var requestOptions, path;
+  path = '/api/blog';
+  requestOptions = {
+    url: apiOptions.server + path,
+    method: "GET",
+    json: {},
+    qs: {
+
+    }
+  };
+
+  // body is json data returned from api
+  request(requestOptions, function(err, response, body){
+    var data, i;
+    if (err) {
+      sendJsonResponse(res, 404, err);
+      return;
+    }
+    data = body;
+    console.log(body);
+    renderBlogpage(req, res, data);
+  });
+};
+
 module.exports.postsCreate = function(req, res) {
     Blog
     .findById('5b249aa70d9ce26b2aba157f')

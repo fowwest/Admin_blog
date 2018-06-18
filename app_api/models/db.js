@@ -47,8 +47,9 @@ process.on('SIGTERM', function(){
 	});
 });
 
-// Require schema
+// Require schemas
 require('./admin');
+require('./blog');
 
 // If using in another application; "npm remove mongoose" 
 // then "npm install mongoose@4.10.8 --save". Upgrading is not always the best option.

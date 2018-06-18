@@ -1,21 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-var PostSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  },
-  content: {
-    type: String,
-    required: true
-  }
-});
-
-var BlogSchema = new mongoose.Schema({
-    posts: [PostSchema]
-})
-
 var AdminSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -72,6 +57,4 @@ AdminSchema.pre('save', function (next) {
   })
 });
 
-var Blog = mongoose.model('Blog', BlogSchema);
-var Admin = mongoose.model('Admin', AdminSchema);
-module.exports = Admin;
+var Admin = module.exports = mongoose.model('Admin', AdminSchema);
