@@ -12,7 +12,8 @@ require('./app_api/models/db');
 var index = require('./app_server/routes/index');
 var admin = require('./app_server/routes/admin');
 //To get the access for the functions defined in index.js class
-var routes = require('./app_server/routes/imageFile');
+// var routes = require('./app_server/routes/imageFile');
+var blog = require('./app_server/routes/blog');
 var blogApi = require('./app_api/routes/blog');
 
 var app = express();
@@ -38,9 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/', admin);
-app.use('/', routes);
+app.use('/', blog);
 app.use('/api', blogApi);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
