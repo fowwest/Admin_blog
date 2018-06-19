@@ -17,7 +17,19 @@ var sendJsonResponse = function(res, status, content) {
 };
 
 var doAddPost = function(req, res, blog) {
+
+  // Getting Uploaded images path and name
+  var path = req.file.path;
+  var imageName = req.file.originalname;
+
+  // Putting uploaded image's path and name into document
+  var imagepath = {};
+  imagepath['path'] = path;
+  imagepath['originalname'] = imageName;
+
+  // Pushing post image, title, and content into db
   blog.posts.push({
+    image: imagepath,
     title: req.body.post_title,
     content: req.body.post_content
   });
@@ -25,9 +37,19 @@ var doAddPost = function(req, res, blog) {
   return res.redirect('/blog');
 };
 
-var doAddImage = function(image, callback) {
- Image.create(image, callback);
-}
+module.exports.postsCreate = function(req, res, next) {
+
+    Blog
+    .findById('5b249aa70d9ce26b2aba157f')
+    .select('posts')
+    .exec(function(err, blog){
+    if (err) {
+        console.log('error');
+      } else {
+        doAddPost(req, res, blog);
+      }
+    });
+};
 
 var renderBlogpage = function(req, res, responseBody) {
 
@@ -72,38 +94,5 @@ module.exports.blog = function(req, res){
   });
 };
 
-module.exports.postsCreate = function(req, res) {
-    Blog
-    .findById('5b249aa70d9ce26b2aba157f')
-    .select('posts')
-    .exec(function(err, blog){
-    if (err) {
-        console.log('error');
-      } else {
-        doAddPost(req, res, blog);
-      }
-    });
-};
 
-module.exports.postsAddImage = function(req, res, next) {
- 
-  res.send(req.files);
-   
-  /*req.files has the information regarding the file you are uploading...
-  from the total information, i am just using the path and the imageName to store in the mongo collection(table)
-  */
-  var path = req.files[0].path;
-  var imageName = req.files[0].originalname;
 
-  var imagepath = {};
-  imagepath['path'] = path;
-  imagepath['originalname'] = imageName;
-
-  //imagepath contains two objects, path and the imageName
-
-  //we are passing two objects in the addImage method.. which is defined above..
-  doAddImage(imagepath, function(err) {
-
-  });
- 
-};

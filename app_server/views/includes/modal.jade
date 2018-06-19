@@ -6,7 +6,11 @@
       span.close ×
       h2 Modal Header
     .modal-body
-      form(action='/add_post', method='post', role='form')
+      form(action='/add_post', method='POST', role='form', enctype='multipart/form-data')
+        | Image: 
+        input(type='file', name='myimage')
+        br
+        br
         | Title: 
         input(type='text', name='post_title', value='title here')
         br
@@ -15,6 +19,6 @@
         input(type='text', name='post_content', value='content here')
         br
         br
-        input(type='submit', value='Add Post')
+        input(type='submit', name='submit', value='Add Post')
     .modal-footer
       h3 Modal Footer
