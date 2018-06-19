@@ -12,7 +12,7 @@ require('./app_api/models/db');
 var index = require('./app_server/routes/index');
 var admin = require('./app_server/routes/admin');
 //To get the access for the functions defined in index.js class
-var imageRoutes = require('./app_server/routes/imageFile');
+var routes = require('./app_server/routes/imageFile');
 var blogApi = require('./app_api/routes/blog');
 
 var app = express();
@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/', admin);
-app.use('/', imageRoutes);
+app.use('/', routes);
 app.use('/api', blogApi);
 
 //URL : http://localhost:3000/images/

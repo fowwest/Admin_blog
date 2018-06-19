@@ -1,26 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-var mongoose = require('mongoose');
-var Image = mongoose.model('Image');
- 
-router.getImages = function(callback, limit) {
- 
- Image.find(callback).limit(limit);
-}
- 
- 
-router.getImageById = function(id, callback) {
-  
- Image.findById(id, callback);
- 
-}
- 
-router.addImage = function(image, callback) {
- Image.create(image, callback);
-}
- 
- 
+
+var ctrlBlog = require('../controllers/blog');
+
+router.post('/add_post', ctrlBlog.postsCreate);
+
 // To get more info about 'multer'.. you can go through https://www.npmjs.com/package/multer..
 var storage = multer.diskStorage({
  destination: function(req, file, cb) {
@@ -30,7 +15,7 @@ var storage = multer.diskStorage({
  cb(null, file.originalname);
  }
 });
- 
+
 var upload = multer({
  storage: storage
 });
@@ -57,5 +42,5 @@ from the total information, i am just using the path and the imageName to store 
  });
  
 });
- 
+
 module.exports = router;
