@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var ctrlBlog = require('../controllers/blog');
-var routes = require('../../app_server/routes/imageFile');
 
 // Blog
 router.get('/blog', ctrlBlog.getBlogPosts);
@@ -10,7 +9,7 @@ router.get('/blog', ctrlBlog.getBlogPosts);
 // To get all the images/files stored in MongoDB
 router.get('/images', function(req, res) {
 //calling the function from index.js class using routes object..
-routes.getImages(function(err, genres) {
+ctrlBlog.getImages(function(err, genres) {
 if (err) {
 throw err;
  
@@ -25,7 +24,7 @@ res.json(genres);
 router.get('/images/:id', function(req, res) {
  
 //calling the function from index.js class using routes object..
-routes.getImageById(req.params.id, function(err, genres) {
+ctrlBlog.getImageById(req.params.id, function(err, genres) {
 if (err) {
 throw err;
 }

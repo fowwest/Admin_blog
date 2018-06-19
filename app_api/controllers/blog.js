@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var Blog = mongoose.model('Blog');
+var Image = mongoose.model('Image');
+
 var sendJsonResponse = function(res, status, content) {
 	res.status(status);
 	res.json(content);
@@ -22,3 +24,14 @@ module.exports.getBlogPosts = function(req, res) {
 
 	});
 };
+
+module.exports.getImages = function(callback, limit) {
+ 
+ Image.find(callback).limit(limit);
+}
+
+module.exports.getImageById = function(id, callback) {
+  
+ Image.findById(id, callback);
+ 
+}

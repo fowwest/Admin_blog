@@ -4,17 +4,17 @@ var multer = require('multer');
 var mongoose = require('mongoose');
 var Image = mongoose.model('Image');
  
-router.getImages = function(callback, limit) {
+// router.getImages = function(callback, limit) {
  
- Image.find(callback).limit(limit);
-}
+//  Image.find(callback).limit(limit);
+// }
  
  
-router.getImageById = function(id, callback) {
+// router.getImageById = function(id, callback) {
   
- Image.findById(id, callback);
+//  Image.findById(id, callback);
  
-}
+// }
  
 router.addImage = function(image, callback) {
  Image.create(image, callback);
