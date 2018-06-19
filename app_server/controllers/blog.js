@@ -19,7 +19,7 @@ var sendJsonResponse = function(res, status, content) {
 var doAddPost = function(req, res, blog) {
 
   // Getting Uploaded images path and name
-  var path = req.file.path;
+  var path = './uploads/' + req.file.filename;
   var imageName = req.file.originalname;
 
   // Putting uploaded image's path and name into document

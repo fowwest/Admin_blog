@@ -7,15 +7,12 @@ block content
         .my-auto
           h2.mb-5 Blog
           each post in posts
+            img(src='#{post.image.path}' style='width:400px;height:auto;')
             p
               | #{post.title}
             p.mb-0
               | #{post.content}
 
-
-  form(action='/', method='POST', enctype='multipart/form-data')
-    input(type='file', name='myimage')
-    input(type='submit', name='submit', value='submit')
 
   if isAdmin
     // Trigger/Open The Modal
