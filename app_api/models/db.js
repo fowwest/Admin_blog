@@ -6,9 +6,8 @@ var dbURI = 'mongodb://localhost:27017/admin-blog';
 if (process.env.NODE_ENV === 'production'){
 	dbURI = process.env.MONGODB_URI;
 } 
-// Connect
-mongoose.connect(dbURI);
 
+mongoose.connect(dbURI);
 
 /* Event Listeners */
 mongoose.connection.on('connected', function(){

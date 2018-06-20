@@ -25,13 +25,3 @@ module.exports.getBlogPosts = function(req, res) {
 	});
 };
 
-module.exports.getImages = function(callback, limit) {
- 
- Image.find(callback).limit(limit);
-}
-
-module.exports.getImageById = function(id, callback) {
-  
- Image.findById(id, callback);
- 
-}

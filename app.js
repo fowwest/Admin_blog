@@ -1,3 +1,4 @@
+require('dotenv').load();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -23,7 +24,6 @@ app.set('views', path.join(__dirname, './app_server/views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 //use sessions for tracking logins
 app.use(session({
   secret: 'work hard',

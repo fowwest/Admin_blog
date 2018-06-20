@@ -8,7 +8,7 @@ var apiOptions = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = 'https://infinite-springs-12949.herokuapp.com';
+  apiOptions.server = 'https://guarded-retreat-84031.herokuapp.com/';
 }
 
 var sendJsonResponse = function(res, status, content) {
