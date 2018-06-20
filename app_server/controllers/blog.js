@@ -7,9 +7,9 @@ var apiOptions = {
   server: 'http://localhost:3000'
 };
 
-// if (process.env.NODE_ENV === 'production') {
-//   apiOptions.server = 'https://infinite-springs-12949.herokuapp.com';
-// }
+if (process.env.NODE_ENV === 'production') {
+  apiOptions.server = 'https://infinite-springs-12949.herokuapp.com';
+}
 
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
