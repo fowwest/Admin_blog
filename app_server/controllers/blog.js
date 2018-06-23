@@ -19,7 +19,7 @@ var sendJsonResponse = function(res, status, content) {
 var doAddPost = function(req, res, blog) {
 
   // Getting Uploaded images path and name
-  var path = './uploads/' + req.file.filename;
+  var path = '/uploads/' + req.file.filename;
   var imageName = req.file.originalname;
 
   // Putting uploaded image's path and name into document
@@ -35,6 +35,47 @@ var doAddPost = function(req, res, blog) {
   });
   blog.save();
   return res.redirect('/blog');
+};
+
+// Error handler
+var _showError = function(req, res, status) {
+  var title, content;
+  if (status === 404) {
+    title = "404, page not found";
+    content = "Oh dear. Looks like we can't find the page. Sorry.";
+  } else {
+    title = status + ", something's gone wrong.";
+    content = "Something, somwhere, has gone just a little bit wrong";
+  }
+  res.status(status);
+  // res.render('generic-text', {
+  //   title: title,
+  //   content: content
+  // });
+};
+
+var getPostsInfo = function(req, res, callback) {
+  var requestOptions, path;
+  path = '/api/blog/posts/' + req.params.postid;
+  requestOptions = {
+    url: apiOptions.server + path,
+    method: 'GET',
+    json: {},
+  };
+  request(requestOptions, function(err, response, body){
+    var data = body; // data processing
+    if (response.statusCode === 200) {
+      callback(req, res, data);
+    } else {
+      _showError(req, res, response.statusCode);
+    }
+  });
+};
+
+var renderPostPage = function(req, res, postDetail) {
+  res.render('post-info', {
+    post: postDetail.post
+  });
 };
 
 module.exports.postsCreate = function(req, res, next) {
@@ -93,6 +134,14 @@ module.exports.blog = function(req, res){
     renderBlogpage(req, res, data);
   });
 };
+
+  /* GET posts info page */
+module.exports.postInfo = function(req, res){
+  getPostsInfo(req, res, function(req, res, responseData) {
+    renderPostPage(req, res, responseData);
+  });
+};
+
 
 
 

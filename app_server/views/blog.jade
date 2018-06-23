@@ -7,11 +7,16 @@ block content
         .my-auto
           h2.mb-5 Blog
           each post in posts
-            img(src='#{post.image.path}' style='width:400px;height:auto;')
-            p
-              | #{post.title}
-            p.mb-0
-              | #{post.content}
+            div(class='post-container')
+              a(href='/blog/posts/#{post._id}')
+                div(class='post-img')
+                  img(src='#{post.image.path}' style='max-width:400px;height:auto;')
+                div(class='post-title')
+                  p
+                    | #{post.title}
+                div(class='post-content')
+                  p
+                    | #{post.content}
 
 
   if isAdmin

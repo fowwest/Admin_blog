@@ -12,8 +12,6 @@ require('./app_api/models/db');
 // Routes
 var index = require('./app_server/routes/index');
 var admin = require('./app_server/routes/admin');
-//To get the access for the functions defined in index.js class
-// var routes = require('./app_server/routes/imageFile');
 var blog = require('./app_server/routes/blog');
 var blogApi = require('./app_api/routes/blog');
 
@@ -23,7 +21,6 @@ var app = express();
 app.set('views', path.join(__dirname, './app_server/views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
 //use sessions for tracking logins
 app.use(session({
   secret: 'work hard',

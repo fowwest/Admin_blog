@@ -4,6 +4,9 @@ var router = express.Router();
 var ctrlAdmin = require('../controllers/admin');
 var ctrlBlog = require('../controllers/blog');
 
+router.get('/profile', ctrlAdmin.requiresLogin , ctrlAdmin.getProfile);
+router.get('/logout', ctrlAdmin.logout);
+router.get('/login', ctrlAdmin.loginPage)
 router.post('/register', ctrlAdmin.registerAdmin);
 router.post('/login', ctrlAdmin.loginAdmin);
 
