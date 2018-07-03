@@ -1,10 +1,9 @@
 extends layout
 
 block content
-  img(src='#{post.image.path}' style='width:70%; height: auto;')
+  img(src='#{imageUrl}' style='width:70%; height: auto;  margin:10px; ')
   h1 #{post.title}
   p #{post.content}
-
 
 
 

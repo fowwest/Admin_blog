@@ -20,9 +20,12 @@ var upload = multer({
 // Posting blog posts
 // Using upload.single() method middleware to handle images
 
-router.post('/add_post', upload.single('myimage'), ctrlBlog.postsCreate);
+router.post('/add_post', upload.single('postimage'), ctrlBlog.postsCreate);
 router.get('/blog' , ctrlBlog.blog);
 router.get('/blog/posts/:postid', ctrlBlog.postInfo);
+router.get('/post-submit-conf', function(req, res) {
+	res.render('post-submit-conf');
+});
 
 
 module.exports = router;

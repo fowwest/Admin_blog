@@ -3,26 +3,46 @@ extends layout
 block content
   h1= name
 
-  section#interests.resume-section.p-3.p-lg-5.d-flex.flex-column
-        .my-auto
-          h2.mb-5 Blog
-          each post in posts
-            div(class='post-container')
-              a(href='/blog/posts/#{post._id}')
-                div(class='post-img')
-                  img(src='#{post.image.path}' style='max-width:400px;height:auto;')
-                div(class='post-title')
-                  p
-                    | #{post.title}
-                div(class='post-content')
-                  p
-                    | #{post.content}
+  include ./includes/modalForm.jade
 
+  - var keys = []
+  - var urlList = []
+  - var postsList = []
+
+  // Loop through blog posts and reverses order into 
+  // postsList to display newest posts ontop
+  - var x = 0;
+  - for (var i = posts.length - 1; i >= 0; i--)
+    - postsList[x] = posts[i];
+    - x++
+
+  section#interests.resume-section.p-3.p-lg-5.d-flex.flex-column
+    .my-auto
+      h2.mb-5 Blog
+        div(class='post-container')
+          - var i = 0
+          - var x = 0;
+          - for (var i = imageUrl.length - 1; i >= 0; i--)
+            - urlList[x] = imageUrl[i]
+            - x++
+
+          - var i = 0;
+          each post in postsList
+            a(href='/blog/posts/#{post._id}')
+              div(class='post-img')
+                img(src= urlList[i] style='max-width:400px;height:auto;')
+              div(class='post-title')
+                p
+                  | #{post.title}
+              div(class='post-content')
+                p
+                  | #{post.content}
+              - i++
 
   if isAdmin
-    // Trigger/Open The Modal
     button#myBtn Add Post
-    include ./includes/modal.jade
+
+
 
 
 

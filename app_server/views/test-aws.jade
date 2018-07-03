@@ -1,0 +1,20 @@
+extends layout
+
+block content
+
+  form(action='/save-details', method='POST', role='form', enctype='multipart/form-data')
+    | Image: 
+    input(type='file', name='myfile')
+    br
+    br
+    | Title: 
+    input(type='text', name='post_title', value='title here')
+    br
+    br
+    | Content: 
+    input(type='text', name='post_content', value='content here')
+    br
+    br
+    input(type='submit', name='submit', value='Add Post')
+
+  img(src='#{url}')

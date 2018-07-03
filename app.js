@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+
 // Db connection
 require('./app_api/models/db');
 
@@ -38,6 +39,14 @@ app.use('/', index);
 app.use('/', admin);
 app.use('/', blog);
 app.use('/api', blogApi);
+
+
+var fs = require('fs'),
+    AWS = require('aws-sdk'),
+    s3 = new AWS.S3('admin-blog-assets', {
+        accessKeyId: 'AKIAICIVYGTKIT2Z35DQ',
+        secretAccessKey: '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'});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

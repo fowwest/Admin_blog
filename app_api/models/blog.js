@@ -11,6 +11,10 @@ var imageSchema = mongoose.Schema({
  originalname: {
 	 type: String,
 	 required: true
+ },
+ key: {
+  type: String,
+  required:true
  }
  
 });

@@ -2,6 +2,16 @@ var mongoose = require('mongoose');
 var Blog = mongoose.model('Blog');
 var request = require('request');
 var Image = mongoose.model('Image');
+var multiparty = require('connect-multiparty');
+var multipartyMiddleware = multiparty();
+
+// Test AWS
+var fs = require('fs'),
+    AWS = require('aws-sdk'),
+    s3 = new AWS.S3('admin-blog-assets', {
+        accessKeyId: 'AKIAICIVYGTKIT2Z35DQ',
+        secretAccessKey: '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'});
+// End 
 
 var apiOptions = {
   server: 'http://localhost:3000'
@@ -16,16 +26,43 @@ var sendJsonResponse = function(res, status, content) {
   res.json(content);
 };
 
+var renderPostPage = function(req, res, postDetail) {
+  console.log(postDetail.post.image.key);
+
+  var params = {Bucket: 'admin-blog-assets', Key: postDetail.post.image.key};
+  var url = s3.getSignedUrl('getObject', params);
+  console.log('The URL is', url);
+
+  res.render('post-info', {
+    post: postDetail.post,
+    imageUrl: url
+  });
+};
+
 var doAddPost = function(req, res, blog) {
 
-  // Getting Uploaded images path and name
-  var path = '/uploads/' + req.file.filename;
-  var imageName = req.file.originalname;
+  var file = req.file;                                                                                                                
+  let fileData = fs.readFileSync(file.path);
+  console.log(file);
+  var params = {
+  Bucket: 'admin-blog-assets',
+  Key: file.filename,
+  Body: fileData,
+  ACL:'public-read'
+  };
+  s3.putObject(params, function (perr, pres) {
+      if (perr) {
+          console.log("Error uploading image: ", perr);                                                
+      } else {
+          console.log("uploading image successfully");                       
+      }                      
+  });   
 
   // Putting uploaded image's path and name into document
   var imagepath = {};
-  imagepath['path'] = path;
-  imagepath['originalname'] = imageName;
+  imagepath['path'] = file.path;
+  imagepath['originalname'] = file.originalname;
+  imagepath['key'] = file.filename;
 
   // Pushing post image, title, and content into db
   blog.posts.push({
@@ -34,7 +71,9 @@ var doAddPost = function(req, res, blog) {
     content: req.body.post_content
   });
   blog.save();
-  return res.redirect('/blog');
+
+  return res.redirect('/profile');
+
 };
 
 // Error handler
@@ -72,11 +111,6 @@ var getPostsInfo = function(req, res, callback) {
   });
 };
 
-var renderPostPage = function(req, res, postDetail) {
-  res.render('post-info', {
-    post: postDetail.post
-  });
-};
 
 module.exports.postsCreate = function(req, res, next) {
 
@@ -96,14 +130,30 @@ var renderBlogpage = function(req, res, responseBody) {
 
     // Flag for admin
     var isAdmin = false;
+    var keyArray = [];
+    var imageUrlList = [];
+
     if (req.session.userId) {
       isAdmin = true;
+    }
+
+    for (i = 0; i < responseBody.posts.length; i++) {
+      var imageKey = responseBody.posts[i].image.key;
+      keyArray[i] = imageKey;
+    }
+
+    for (i = 0; i < keyArray.length; i ++) {
+      var params = {Bucket: 'admin-blog-assets', Key: keyArray[i]};
+      var url = s3.getSignedUrl('getObject', params);
+      imageUrlList[i] = url;
     }
 
     // Render blog page
     res.render('blog', {
     isAdmin,
-    posts: responseBody.posts
+    posts: responseBody.posts,
+    imageUrl: imageUrlList,
+    postSubmitted: false
   });
 };
 

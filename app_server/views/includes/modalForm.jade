@@ -1,4 +1,3 @@
-// The Modal
 #myModal.modal
   // Modal content
   .modal-content
@@ -8,17 +7,17 @@
     .modal-body
       form(action='/add_post', method='POST', role='form', enctype='multipart/form-data')
         | Image: 
-        input(type='file', name='myimage')
+        input(type='file', name='postimage', required='true')
         br
         br
         | Title: 
-        input(type='text', name='post_title', value='title here')
+        input(type='text', name='post_title', value='title here', required='true')
         br
         br
         | Content: 
-        input(type='text', name='post_content', value='content here')
+        input(type='text', name='post_content', value='content here', required='true')
         br
         br
-        input(type='submit', name='submit', value='Add Post')
+        input(type='submit', action='/blog',  name='submit', value='Add Post')
     .modal-footer
       h3 Modal Footer
