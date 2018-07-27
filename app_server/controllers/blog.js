@@ -7,11 +7,13 @@ var multipartyMiddleware = multiparty();
 
 // Test AWS
 var fs = require('fs'),
-    AWS = require('aws-sdk'),
-    s3 = new AWS.S3('admin-blog-assets', {
-        accessKeyId: 'AKIAICIVYGTKIT2Z35DQ',
-        secretAccessKey: '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'});
+    AWS = require('aws-sdk');
+    // s3 = new AWS.S3('admin-blog-assets');
 // End 
+    
+    AWS.config.update({region: 'us-east-1'});
+
+var s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
 var apiOptions = {
   server: 'http://localhost:3000'
@@ -27,7 +29,7 @@ var sendJsonResponse = function(res, status, content) {
 };
 
 var renderPostPage = function(req, res, postDetail) {
-  console.log(postDetail.post.image.key);
+  console.log(postDetail.post.image.key + ': This is key');
 
   var params = {Bucket: 'admin-blog-assets', Key: postDetail.post.image.key};
   var url = s3.getSignedUrl('getObject', params);

@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+console.log(process.env.AWS_SDK_LOAD_CONFIG);
+
 // Db connection
 require('./app_api/models/db');
 

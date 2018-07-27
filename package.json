@@ -26,6 +26,7 @@
     "request": "^2.87.0",
     "s3fs": "git+https://github.com/RiptideElements/s3fs.git",
     "serve-favicon": "~2.4.5",
-    "session": "^0.1.0"
+    "session": "^0.1.0",
+    "uuid": "^3.3.2"
   }
 }
