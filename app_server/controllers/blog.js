@@ -131,14 +131,13 @@ module.exports.postsCreate = function(req, res, next) {
 var renderBlogpage = function(req, res, responseBody) {
 
     // Flag for admin
-    var defaultArray = [];
     var isAdmin = false;
     var keyArray = [];
     var imageUrlList = [];
 
     if (req.session.userId) {
       isAdmin = true;
-    }
+    } 
 
     if(responseBody.posts) {
 
@@ -156,18 +155,18 @@ var renderBlogpage = function(req, res, responseBody) {
       // Render blog page
       res.render('blog', {
       isAdmin,
-      posts: null,
+      posts: responseBody.posts,
       imageUrl: imageUrlList,
       postSubmitted: false
       });
     } else {
-      // Render blog page
-      res.render('blog', {
-      isAdmin,
-      posts: defaultArray,
-      imageUrl: imageUrlList,
-      postSubmitted: false
-      });
+        // Render blog page
+        res.render('blog', {
+        isAdmin,
+        posts: [],
+        imageUrl: imageUrlList,
+        postSubmitted: false
+        });
     }
 
 
@@ -196,7 +195,6 @@ module.exports.blog = function(req, res){
       return;
     }
     data = body;
-    console.log(body);
     renderBlogpage(req, res, data);
   });
 };
