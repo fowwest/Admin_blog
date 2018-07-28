@@ -79,6 +79,10 @@ module.exports.loginPage = function(req, res) {
   res.render('login', {});
 }
 
+module.exports.registerPage = function(req, res) {
+  res.render('register', {});
+}
+
 module.exports.loginAdmin = function(req, res, next) {
 	if (req.body.logemail && req.body.logpassword) {
 	    Admin.authenticate(req.body.logemail, req.body.logpassword, function (error, admin) {
