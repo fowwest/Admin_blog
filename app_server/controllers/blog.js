@@ -139,15 +139,19 @@ var renderBlogpage = function(req, res, responseBody) {
       isAdmin = true;
     }
 
-    for (i = 0; i < responseBody.posts.length; i++) {
+    if(responseBody.posts.length > 0) {
+
+      for (i = 0; i < responseBody.posts.length; i++) {
       var imageKey = responseBody.posts[i].image.key;
       keyArray[i] = imageKey;
-    }
+      }
 
-    for (i = 0; i < keyArray.length; i ++) {
-      var params = {Bucket: 'admin-blog-assets', Key: keyArray[i]};
-      var url = s3.getSignedUrl('getObject', params);
-      imageUrlList[i] = url;
+      for (i = 0; i < keyArray.length; i ++) {
+        var params = {Bucket: 'admin-blog-assets', Key: keyArray[i]};
+        var url = s3.getSignedUrl('getObject', params);
+        imageUrlList[i] = url;
+      }
+      
     }
 
     // Render blog page
