@@ -131,6 +131,7 @@ module.exports.postsCreate = function(req, res, next) {
 var renderBlogpage = function(req, res, responseBody) {
 
     // Flag for admin
+    var defaultArray = [];
     var isAdmin = false;
     var keyArray = [];
     var imageUrlList = [];
@@ -160,10 +161,10 @@ var renderBlogpage = function(req, res, responseBody) {
       postSubmitted: false
       });
     } else {
-            // Render blog page
+      // Render blog page
       res.render('blog', {
       isAdmin,
-      posts: [],
+      posts: defaultArray,
       imageUrl: imageUrlList,
       postSubmitted: false
       });
