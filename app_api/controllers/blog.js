@@ -25,6 +25,8 @@ module.exports.getBlogPosts = function(req, res) {
 	});
 };
 
+// Test heroku
+
 module.exports.blogPostsReadOne = function(req, res) {
 	if (req.params && req.params.postid) {
 		Blog
