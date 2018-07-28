@@ -156,7 +156,7 @@ var renderBlogpage = function(req, res, responseBody) {
       // Render blog page
       res.render('blog', {
       isAdmin,
-      posts: responseBody.posts,
+      posts: null,
       imageUrl: imageUrlList,
       postSubmitted: false
       });
