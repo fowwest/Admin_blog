@@ -139,7 +139,7 @@ var renderBlogpage = function(req, res, responseBody) {
       isAdmin = true;
     }
 
-    if(responseBody.posts.length > 0) {
+    if(responseBody.posts) {
 
       for (i = 0; i < responseBody.posts.length; i++) {
       var imageKey = responseBody.posts[i].image.key;
@@ -151,16 +151,25 @@ var renderBlogpage = function(req, res, responseBody) {
         var url = s3.getSignedUrl('getObject', params);
         imageUrlList[i] = url;
       }
-      
+
+      // Render blog page
+      res.render('blog', {
+      isAdmin,
+      posts: responseBody.posts,
+      imageUrl: imageUrlList,
+      postSubmitted: false
+      });
+    } else {
+            // Render blog page
+      res.render('blog', {
+      isAdmin,
+      posts: [],
+      imageUrl: imageUrlList,
+      postSubmitted: false
+      });
     }
 
-    // Render blog page
-    res.render('blog', {
-    isAdmin,
-    posts: responseBody.posts,
-    imageUrl: imageUrlList,
-    postSubmitted: false
-  });
+
 };
 
 /* GET blog page */
