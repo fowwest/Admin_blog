@@ -4,7 +4,8 @@ var dbURI = 'mongodb://localhost:27017/admin-blog';
 // If in production mode, use production database. Use MONGODB_URI instead of
 // dbURI string to hide database credentials
 if (process.env.NODE_ENV === 'production'){
-	dbURI = process.env.MONGODB_URI;
+	// dbURI = process.env.MONGODB_URI;
+	dbURI = 'mongodb://heroku_2ls5dwcn:k1dkgqmsrlcelmg5q2gj9h0ana@ds143071.mlab.com:43071/heroku_2ls5dwcn';
 } 
 
 mongoose.connect(dbURI);
