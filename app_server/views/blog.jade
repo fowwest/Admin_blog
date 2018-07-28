@@ -40,6 +40,11 @@ block content
                   p
                     | #{post.content}
                 - i++
+  - else
+    section#interests.resume-section.p-3.p-lg-5.d-flex.flex-column
+      .my-auto
+        h2.mb-5 Blog
+          div(class='post-container')
 
   if isAdmin
     button#myBtn Add Post
