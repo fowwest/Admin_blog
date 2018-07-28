@@ -20,7 +20,7 @@ var apiOptions = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = 'https://stark-citadel-59092.herokuapp.com';
+  apiOptions.server = 'https://arcane-fortress-97369.herokuapp.com';
 }
 
 var sendJsonResponse = function(res, status, content) {
