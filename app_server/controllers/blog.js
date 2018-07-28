@@ -5,13 +5,14 @@ var Image = mongoose.model('Image');
 var multiparty = require('connect-multiparty');
 var multipartyMiddleware = multiparty();
 
-// Test AWS
 var fs = require('fs'),
     AWS = require('aws-sdk');
-    // s3 = new AWS.S3('admin-blog-assets');
-// End 
     
-    AWS.config.update({region: 'us-east-1'});
+    AWS.config.update({
+      region: 'us-east-1',
+      accessKeyId: 'AKIAI7MCSXQIZEAOC5GA',
+      secretAccessKey: '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'
+    });
 
 var s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
