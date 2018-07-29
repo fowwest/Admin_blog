@@ -16,8 +16,8 @@ var fs = require('fs'),
 
     AWS.config.update({
        region: 'us-east-1',
-       accessKeyId: 'AKIAI7MCSXQIZEAOC5GA',
-       secretAccessKey: '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'
+       accessKeyId: process.env.awsAccessKey,
+       secretAccessKey: process.env.awsSecretAccessKey
      });
 
 var s3 = new AWS.S3({apiVersion: '2006-03-01'});
