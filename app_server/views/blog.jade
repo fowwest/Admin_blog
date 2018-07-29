@@ -40,6 +40,9 @@ block content
                   p
                     | #{post.content}
                 - i++
+
+              a(href='api/blog/posts/#{post._id}/delete')
+                button Delete Posts
   else
     section#interests.resume-section.p-3.p-lg-5.d-flex.flex-column
       .my-auto

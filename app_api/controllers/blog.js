@@ -74,3 +74,51 @@ module.exports.blogPostsReadOne = function(req, res) {
 	}
 };
 
+module.exports.blogPostsDeleteOne = function(req, res) {
+	if (!req.params.postid) {
+		sendJsonResponse(res, 404, {
+			"message": "Need postid"
+		});
+		return;
+	}
+	Blog
+	.findById('5b249aa70d9ce26b2aba157f')
+	.select("posts")
+	.exec(function(err, blog) {
+		var thisPost;
+		if (!blog) {
+			sendJsonResponse(res, 404, {
+				"message": "blogid not found"
+			});
+			return;
+		} else if (err) {
+			sendJsonResponse(res, 404, err);
+		}
+		if (blog.posts && blog.posts.length > 0) {
+			
+			if (!blog.posts.id(req.params.postid)) {
+				sendJsonResponse(res, 404, {
+					"message": "postid not found"
+				});
+				return;
+			} else {
+				blog.posts.id(req.params.postid).remove();
+				blog.save(function(err) {
+					if (err) {
+						sendJsonResponse(res, 404, err);
+					} else {
+						console.log('Succesful deletion');
+						return res.redirect('/blog');
+					}
+				});
+
+			}
+		} else {
+			sendJsonResponse(res, 404, {
+				"message": "No posts found"
+			});
+		}
+	});
+
+};
+
