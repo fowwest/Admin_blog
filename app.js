@@ -7,6 +7,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+console.log(process.env.HEROKU_URL);
+console.log(process.env.MONGODB_URI);
+
 // Db connection
 require('./app_api/models/db');
 
