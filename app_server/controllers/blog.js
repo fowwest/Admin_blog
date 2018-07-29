@@ -27,7 +27,7 @@ var apiOptions = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = process.env.HEROKU_URL;
+  apiOptions.server = 'https://arcane-fortress-97369.herokuapp.com';
 }
 
 var sendJsonResponse = function(res, status, content) {
