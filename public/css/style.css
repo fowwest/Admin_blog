@@ -7,6 +7,44 @@ a {
   color: #00B7FF;
 }
 
+.xxx {
+  outline:white solid 0.5px;
+  padding: 6px 8px;
+  border-radius: 3px;
+  color:rgba(0,0,0,0.4);
+  font-weight: bold;
+  border: none;
+  margin: 0;
+  background: rgba(0,0,0,0.2);
+  font-family: helvetica, arial, sans-serif;
+  font-size: 19pt;
+}
+
+#xxx:hover {
+   background: rgba(0,0,0,0.4); 
+   color:rgba(0,0,0,0.8);
+}
+
+.myStyle {
+  position:relative;
+  top:-40px;
+}
+
+#post-container {
+  border:1px solid #eeeeee;
+}
+
+#post-img {
+  width:100%; 
+  margin-bottom:20px;
+}
+
+    #content-text {
+      font-size:32px;
+      height:150px;
+      overflow:hidden;
+    }
+
 /* Blog posts */
 .post-container {
 	border:1px solid black;

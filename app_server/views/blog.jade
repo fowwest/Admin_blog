@@ -3,7 +3,8 @@ extends layout
 block content
   h1= name
 
-  include ./includes/modalForm.jade
+  include ./includes/addPostModal.jade
+  include ./includes/deletePostModal.jade
 
   if posts
 
@@ -21,36 +22,59 @@ block content
     section#interests.resume-section.p-3.p-lg-5.d-flex.flex-column
       .my-auto
         h2.mb-5 Blog
-          div(class='post-container')
-            - var i = 0
-            - var x = 0;
-            - for (var i = imageUrl.length - 1; i >= 0; i--)
-              - urlList[x] = imageUrl[i]
-              - x++
+          - var i = 0
+          - var x = 0;
+          - for (var i = imageUrl.length - 1; i >= 0; i--)
+            - urlList[x] = imageUrl[i]
+            - x++
 
-            - var i = 0;
-            each post in postsList
-              a(href='/blog/posts/#{post._id}')
-                div(class='post-img')
-                  img(src= urlList[i] style='max-width:400px;height:auto;')
-                div(class='post-title')
-                  p
-                    | #{post.title}
-                div(class='post-content')
-                  p
-                    | #{post.content}
-                - i++
+          - var i = 0;
+          each post in postsList
+            div#post-container(class='container-fluid')
+              .row
+                .col-md-6
+                  a(href='/blog/posts/#{post._id}')  
+                    h2 #{post.title}
+                    h4 Date and Time posting
+                    img#post-img(src=urlList[i])
+                .col-md-1.offset-md-5
+                  if isAdmin
+                    
+                    button.xxx#deletePostBtn X
+              .row
+                .col-md-12
+                  div#content-text-container
+                    p(id='content-text') 
+                      | #{post.content}
+              - i++
 
-              a(href='api/blog/posts/#{post._id}/delete')
-                button Delete Posts
+                  
   else
     section#interests.resume-section.p-3.p-lg-5.d-flex.flex-column
       .my-auto
         h2.mb-5 Blog
           div(class='post-container')
 
+  script.
+
+    window.onload = function() {
+      function isOverflown(element) {
+        return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+      }
+
+      if (isOverflown(document.getElementById("content-text"))) {
+        var contentText = document.getElementById("content-text-container");
+        var newdiv = document.createElement("DIV");
+        newdiv.classList.add('myStyle');
+        newdiv.appendChild(document.createTextNode("..."));
+        contentText.appendChild(newdiv);
+      }
+    }
+
   if isAdmin
-    button#myBtn Add Post
+    button#addPostBtn Add Post
+
+
 
 
 

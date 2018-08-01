@@ -51,18 +51,32 @@ footer {
 	to {top:0; opacity:1}
 }
 /* The Close Button */
-.close {
+.closeAddPost {
 	color: white;
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
 }
-.close:hover,
-.close:focus {
+.closeAddPost:hover,
+.closeAddPost:focus {
 color: #000;
 	text-decoration: none;
 	cursor: pointer;
 }
+
+.closeDeletePost {
+	color: white;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+.closeDeletePost:hover,
+.closeDeletePost:focus {
+color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 .modal-header {
 	padding: 2px 16px;
 	background-color: skyblue;
