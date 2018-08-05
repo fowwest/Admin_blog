@@ -1,5 +1,5 @@
 // Get the modal
-var addPostModal = document.getElementById('modalAddPost');
+var addPostModal = document.getElementById('addPostModal');
 // Get the button that opens the modal
 var btn = document.getElementById("addPostBtn");
 // Get the <span> element that closes the modal
@@ -11,10 +11,4 @@ btn.onclick = function() {
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
       addPostModal.style.display = "none";
-};
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-      if (event.target == modal) {
-            addPostModal.style.display = "none";
-      }
 };

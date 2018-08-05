@@ -1,10 +1,10 @@
 extends layout
 
 block content
+
   h1= name
 
   include ./includes/addPostModal.jade
-  include ./includes/deletePostModal.jade
 
   if posts
 
@@ -28,19 +28,60 @@ block content
             - urlList[x] = imageUrl[i]
             - x++
 
-          - var i = 0;
+          - var i = 0;         
           each post in postsList
             div#post-container(class='container-fluid')
               .row
                 .col-md-6
-                  a(href='/blog/posts/#{post._id}')  
+                  a(href='/blog/posts/#{post._id}')   
                     h2 #{post.title}
                     h4 Date and Time posting
                     img#post-img(src=urlList[i])
                 .col-md-1.offset-md-5
                   if isAdmin
-                    
-                    button.xxx#deletePostBtn X
+                    div(id='#{post._id}Modal').modal
+                      // Modal content
+                      .modal-content
+                        .modal-header
+                          button(id='#{post._id}Close' style='background:none;') ×
+                          h2 Modal Header
+                        .modal-body
+                          p Are you sure you want to delete post?
+                        .modal-footer
+                          a(href="api/blog/posts/#{post._id}/delete")                          
+                            button Yes
+                          button(id='#{post._id}Cancel') Cancel
+                    button.xxx(id='#{post._id}') X 
+                    script.
+                      function createOnClick(postId) {  
+                        var postId = "#{post._id}"
+                        // Get the modal
+                        var deletePostModal = document.getElementById(postId + 'Modal');
+                        // Get the button that opens the modal
+                        var deletePostBtn = document.getElementById(postId);
+
+                        // Get the <span> element that closes the modal
+                        var cancelDeletePost = document.getElementById(postId + 'Cancel');
+
+                        // Get the <span> element that closes the modal
+                        var closeDeletePost = document.getElementById(postId + 'Close');
+
+                        // When the user clicks the button, open the modal
+                        deletePostBtn.onclick = function() {
+                              deletePostModal.style.display = "block";
+                        };
+
+                        // When the user clicks on <span> (x), close the modal
+                        cancelDeletePost.onclick = function() {
+                             deletePostModal.style.display = "none";
+                        };
+
+                        // When the user clicks on <span> (x), close the modal
+                        closeDeletePost.onclick = function() {
+                             deletePostModal.style.display = "none";
+                        };  
+                      }
+                      createOnClick();
               .row
                 .col-md-12
                   div#content-text-container

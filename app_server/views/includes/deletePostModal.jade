@@ -5,6 +5,9 @@
       span.closeDeletePost ×
       h2 Modal Header
     .modal-body
-
+      p Are you sure you want to delete post?
+      p #{post._id}
     .modal-footer
-      h3 Modal Footer
+      a(href="api/blog/posts/#{post._id}/delete")
+        button Yes
+      button.closeDeletePost No
