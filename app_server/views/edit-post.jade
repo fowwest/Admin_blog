@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  img(src='#{imageUrl}' style='width:70%; height: auto;  margin:10px; ')
+  form(action='/blog/posts/#{post._id}/edit', method='POST', role='form', enctype='multipart/form-data')
+    input(type='file', name='postimage', required='true')
+    h1
+      input(type='text', name='post_title', value='#{post.title}')
+    p
+      textarea(type='text', name='post_content')
+        | #{post.content}
+    input(type='submit', action='/blog',  name='submit', value='Add Post')

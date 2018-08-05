@@ -22,6 +22,17 @@ var fs = require('fs'),
 
 var s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
+// Requires login middleware
+module.exports.requiresLogin = function (req, res, next) {
+  if (req.session && req.session.userId) {
+    return next();
+  } else {
+    var err = new Error('You must be logged in to view this page.');
+    err.status = 401;
+    return next(err);
+  }
+}
+
 var apiOptions = {
   server: 'http://localhost:3000'
 };
@@ -43,6 +54,19 @@ var renderPostPage = function(req, res, postDetail) {
   console.log('The URL is', url);
 
   res.render('post-info', {
+    post: postDetail.post,
+    imageUrl: url
+  });
+};
+
+var renderEditPage = function(req, res, postDetail) {
+  console.log(postDetail.post.image.key + ': This is key');
+
+  var params = {Bucket: 'admin-blog-assets', Key: postDetail.post.image.key};
+  var url = s3.getSignedUrl('getObject', params);
+  console.log('The URL is', url);
+
+  res.render('edit-post', {
     post: postDetail.post,
     imageUrl: url
   });
@@ -84,6 +108,52 @@ var doAddPost = function(req, res, blog) {
   return res.redirect('/profile');
 
 };
+
+var doUpdatePost = function(req, res, blog) {
+      var thisPost;
+      thisPost = blog.posts.id(req.params.postid);
+      if (!thisPost) {
+        sendJsonResponse(res, 404, {
+          "message": "postid not found!"
+        });
+      } else {
+          var file = req.file;                                                                                                                
+          let fileData = fs.readFileSync(file.path);
+          console.log(file);
+          var params = {
+          Bucket: 'admin-blog-assets',
+          Key: file.filename,
+          Body: fileData,
+          ACL:'public-read'
+          };
+          s3.putObject(params, function (perr, pres) {
+              if (perr) {
+                  console.log("Error uploading image: ", perr);                                                
+              } else {
+                  console.log("uploading image successfully");                       
+              }                      
+          });   
+
+          // Putting uploaded image's path and name into document
+          var imagepath = {};
+          imagepath['path'] = file.path;
+          imagepath['originalname'] = file.originalname;
+          imagepath['key'] = file.filename;
+
+          thisPost.image = imagepath;
+          thisPost.title = req.body.post_title;
+          thisPost.content = req.body.post_content;
+          thisPost.created_at = new Date();
+          blog.save(function(err, blog) {
+            if (err) {
+              sendJsonResponse(res, 404, err);
+            } else {
+              // sendJsonResponse(res, 200, thisPost);
+              res.redirect('/profile');
+            }
+          });
+      }
+}
 
 // Error handler
 var _showError = function(req, res, status) {
@@ -133,6 +203,37 @@ module.exports.postsCreate = function(req, res, next) {
         doAddPost(req, res, blog);
       }
     });
+};
+
+module.exports.postsUpdateOne = function(req, res) {
+  if (!req.params.postid) {
+    sendJsonResponse(res, 404, {
+      "message": "Not found! postid required"
+    });
+    return;
+  }
+  Blog
+  .findById('5b249aa70d9ce26b2aba157f')
+  .select('posts')
+  .exec(function(err, blog) {
+    var thisPost;
+    if (!blog) {
+      sendJsonResponse(res, 404, {
+        "message": "blogid not found!"
+      });
+      return;
+    } else if (err) {
+      sendJsonResponse(res, 404, err);
+      return;
+    }
+    if (blog.posts && blog.posts.length > 0) {
+        doUpdatePost(req, res, blog);
+    } else {
+      sendJsonResponse(res, 404, {
+        "message": "No posts found!"
+      });
+    }
+  });
 };
 
 var renderBlogpage = function(req, res, responseBody) {
@@ -206,10 +307,17 @@ module.exports.blog = function(req, res){
   });
 };
 
-  /* GET posts info page */
+/* GET posts info page */
 module.exports.postInfo = function(req, res){
   getPostsInfo(req, res, function(req, res, responseData) {
     renderPostPage(req, res, responseData);
+  });
+};
+
+/* GET posts info page */
+module.exports.postEdit = function(req, res){
+  getPostsInfo(req, res, function(req, res, responseData) {
+    renderEditPage(req, res, responseData);
   });
 };
 

@@ -49,11 +49,19 @@ block content
 
                   if isAdmin
 
-                  // Include the deletePostModal
-                  include ./includes/deletePostModal.jade
+                    // Include the deletePostModal
+                    include ./includes/deletePostModal.jade
+
+                    // Delete Post Button
+                    button.xxx(id='#{post._id}') X
+
+                    // Edit Post Button
+                    a(href='blog/posts/#{post._id}/edit')
+                      button.glyphicon.glyphicon-edit
 
                     // Include the deletePostModal functionality
                     include ./includes/deletePostScript.jade
+
 
               .row
                 .col-md-12
