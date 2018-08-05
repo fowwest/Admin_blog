@@ -21,14 +21,18 @@ var imageSchema = mongoose.Schema({
 
 var PostSchema = new mongoose.Schema({
 	image: imageSchema,
+
   title: {
     type: String,
     required: true
   },
+
   content: {
     type: String,
     required: true
-  }
+  },
+
+  created_at: { type: Date, required:true, default: Date.now }
 });
 
 var BlogSchema = new mongoose.Schema({

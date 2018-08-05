@@ -21,6 +21,8 @@ var blogApi = require('./app_api/routes/blog');
 
 var app = express();
 
+app.locals.moment = require('moment');
+
 // view engine setup
 app.set('views', path.join(__dirname, './app_server/views'));
 app.set('view engine', 'jade');
