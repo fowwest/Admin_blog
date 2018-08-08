@@ -22,7 +22,7 @@ block content
 
     section#interests.resume-section.p-3.p-lg-5.d-flex.flex-column
       .my-auto
-        h2.mb-5 Blog
+        h1.mb-5 Blog
           - var i = 0
           - var x = 0;
           - for (var i = imageUrl.length - 1; i >= 0; i--)
@@ -37,10 +37,10 @@ block content
                   a(href='/blog/posts/#{post._id}')   
 
                     // Post Title
-                    h2 #{post.title}
+                    h1#post-title #{post.title}
 
                     // Time of posting
-                    h4= 'Created at: ' + moment(post.created_at).format('MMMM Do YYYY, h:mm a') 
+                    h3#post-timestamp= 'Created at: ' + moment(post.created_at).format('MMMM Do YYYY, h:mm a') 
 
                     // Post Image
                     img#post-img(src=urlList[i])
@@ -51,13 +51,13 @@ block content
 
                     // Include the deletePostModal
                     include ./includes/deletePostModal.jade
+                    .post-glyphicons
+                      // Delete Post Button
+                      button.glyphicon.glyphicon-remove(id='#{post._id}')
 
-                    // Delete Post Button
-                    button.xxx(id='#{post._id}') X
-
-                    // Edit Post Button
-                    a(href='blog/posts/#{post._id}/edit')
-                      button.glyphicon.glyphicon-edit
+                      // Edit Post Button
+                      a(href='blog/posts/#{post._id}/edit')
+                        button.glyphicon.glyphicon-edit
 
                     // Include the deletePostModal functionality
                     include ./includes/deletePostScript.jade
@@ -94,7 +94,7 @@ block content
     }
 
   if isAdmin
-    button#addPostBtn Add Post
+    button#addPostBtn.login100-form-btn Add Post
 
 
 

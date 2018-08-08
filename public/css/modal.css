@@ -18,7 +18,6 @@ footer {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	z-index: 11; /* Sit on top */
-	padding-top: 100px; /* Location of the box */
 	left: 0;
 	top: 0;
 	width: 100%; /* Full width */
@@ -56,7 +55,7 @@ footer {
 .closeAddPost {
 	color: white;
 	float: right;
-	font-size: 28px;
+	font-size: 50px;
 	font-weight: bold;
 }
 .closeAddPost:hover,

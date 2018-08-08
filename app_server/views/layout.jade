@@ -7,6 +7,7 @@ html
     meta(name='author', content='')
     title Resume - Start Bootstrap Theme
     // Bootstrap core CSS
+    include includes/login-form/login-form-head-links.jade
     link(href='/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet')
     // Glyphicons
     link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel='stylesheet')
@@ -25,6 +26,9 @@ html
     include ./includes/navbar
 
     block content
+
+    // Login Form
+    include includes/login-form/login-form-scripts.jade
 
     // Bootstrap core JavaScript
     script(src='/vendor/jquery/jquery.min.js')
