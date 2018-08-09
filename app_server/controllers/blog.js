@@ -117,33 +117,37 @@ var doUpdatePost = function(req, res, blog) {
           "message": "postid not found!"
         });
       } else {
-          var file = req.file;                                                                                                                
-          let fileData = fs.readFileSync(file.path);
-          console.log(file);
-          var params = {
-          Bucket: 'admin-blog-assets',
-          Key: file.filename,
-          Body: fileData,
-          ACL:'public-read'
-          };
-          s3.putObject(params, function (perr, pres) {
-              if (perr) {
-                  console.log("Error uploading image: ", perr);                                                
-              } else {
-                  console.log("uploading image successfully");                       
-              }                      
-          });   
+          if (req.body.postimage) { 
+            var file = req.file;                                                                                                                
+            let fileData = fs.readFileSync(file.path);
+            console.log(file);
+            var params = {
+            Bucket: 'admin-blog-assets',
+            Key: file.filename,
+            Body: fileData,
+            ACL:'public-read'
+            };
+            s3.putObject(params, function (perr, pres) {
+                if (perr) {
+                    console.log("Error uploading image: ", perr);                                                
+                } else {
+                    console.log("uploading image successfully");                       
+                }                      
+            });   
 
-          // Putting uploaded image's path and name into document
-          var imagepath = {};
-          imagepath['path'] = file.path;
-          imagepath['originalname'] = file.originalname;
-          imagepath['key'] = file.filename;
+            // Putting uploaded image's path and name into document
+            var imagepath = {};
+            imagepath['path'] = file.path;
+            imagepath['originalname'] = file.originalname;
+            imagepath['key'] = file.filename;
 
-          thisPost.image = imagepath;
+            thisPost.image = imagepath;
+          }
+
           thisPost.title = req.body.post_title;
           thisPost.content = req.body.post_content;
-          thisPost.created_at = new Date();
+          thisPost.updated_at = new Date();
+          thisPost.updated_at.post_updated = true;
           blog.save(function(err, blog) {
             if (err) {
               sendJsonResponse(res, 404, err);

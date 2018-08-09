@@ -3,7 +3,7 @@ extends layout
 block content
   img(src='#{imageUrl}' style='width:70%; height: auto;  margin:10px; ')
   form(action='/blog/posts/#{post._id}/edit', method='POST', role='form', enctype='multipart/form-data')
-    input(type='file', name='postimage', required='true')
+    input(type='file', name='postimage')
     h1
       input#edit-title(type='text', name='post_title', value='#{post.title}')
     p

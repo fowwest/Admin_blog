@@ -40,7 +40,11 @@ block content
                     h1#post-title #{post.title}
 
                     // Time of posting
-                    h3#post-timestamp= 'Created at: ' + moment(post.created_at).format('MMMM Do YYYY, h:mm a') 
+                    if post.updated_at
+                      h3#post-timestamp= 'Updated at: ' + moment(post.updated_at).format('MMMM Do YYYY, h:mm a')
+                    else
+                      h3#post-timestamp= 'Created at: ' + moment(post.created_at).format('MMMM Do YYYY, h:mm a') 
+
 
                     // Post Image
                     img#post-img(src=urlList[i])

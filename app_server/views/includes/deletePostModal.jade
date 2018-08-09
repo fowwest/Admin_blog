@@ -8,7 +8,7 @@ div(id='#{post._id}Modal').limiter.modal
       .login100-form.validate-form
         .container-login100-form-btn
           a(href="api/blog/posts/#{post._id}/delete") 
-            button(type='submit', action='/blog',  name='submit').login100-form-btn Delete Post
+            button#deletePostBtn(type='submit', action='/blog',  name='submit').login100-form-btn Delete Post
 
           button( style='margin-left:2px;' id='#{post._id}Cancel').login100-form-btn Cancel
 

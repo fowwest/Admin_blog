@@ -32,7 +32,15 @@ var PostSchema = new mongoose.Schema({
     required: true
   },
 
-  created_at: { type: Date, required:true, default: Date.now }
+  created_at: { type: Date, required:true, default: Date.now },
+  updated_at: { 
+      type: Date, 
+      required:false, 
+      default: null,
+      
+      // Changes to true when post is updated
+      post_updated: false
+  }
 });
 
 var BlogSchema = new mongoose.Schema({
