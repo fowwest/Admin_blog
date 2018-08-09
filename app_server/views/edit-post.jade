@@ -3,10 +3,27 @@ extends layout
 block content
   img(src='#{imageUrl}' style='width:70%; height: auto;  margin:10px; ')
   form(action='/blog/posts/#{post._id}/edit', method='POST', role='form', enctype='multipart/form-data')
-    input(type='file', name='postimage')
+    input#image(type='file', name='postimage')
+
+    //- Hidden inputs to determine if new image was selected
+    input#image-selected-checkbox(type='checkbox' style='display:none;')
+    input#image-selected(type='text', name='image_selected', val='', style='display:none;')
+
     h1
       input#edit-title(type='text', name='post_title', value='#{post.title}')
     p
       textarea#edit-content(type='text', name='post_content', rows='8', cols='70')
         | #{post.content}
     input(type='submit', action='/blog',  name='submit', value='Update Post').login100-form-btn#updatePostBtn
+
+    //- Script to determine if new image was selected
+    script.
+      $("input#image").change(function () {
+        $('#image-selected-checkbox').click();
+        $('#image-selected').val($('#image-selected-checkbox').is(':checked'));
+        alert($('#image-selected').val());
+      });
+          
+      
+
+      

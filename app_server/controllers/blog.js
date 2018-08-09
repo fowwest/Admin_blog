@@ -110,17 +110,22 @@ var doAddPost = function(req, res, blog) {
 };
 
 var doUpdatePost = function(req, res, blog) {
+
       var thisPost;
       thisPost = blog.posts.id(req.params.postid);
+
       if (!thisPost) {
         sendJsonResponse(res, 404, {
           "message": "postid not found!"
         });
       } else {
-          if (req.body.postimage) { 
-            var file = req.file;                                                                                                                
+        
+          // If new img was selected, insert new img to db    
+          if (req.body.image_selected === 'true') {
+            console.log('image was selected');
+            var imagepath = {};
+            var file = req.file;                                                                                                               
             let fileData = fs.readFileSync(file.path);
-            console.log(file);
             var params = {
             Bucket: 'admin-blog-assets',
             Key: file.filename,
@@ -136,7 +141,6 @@ var doUpdatePost = function(req, res, blog) {
             });   
 
             // Putting uploaded image's path and name into document
-            var imagepath = {};
             imagepath['path'] = file.path;
             imagepath['originalname'] = file.originalname;
             imagepath['key'] = file.filename;
